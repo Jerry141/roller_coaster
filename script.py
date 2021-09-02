@@ -26,9 +26,6 @@ def rank_year(name, park, data):
     ax.invert_yaxis()
     plt.show()
 
-
-rank_year("El Toro", "Six Flags Great Adventure", wood_ranking)
-
 # function that plots ranking comparison of a given roller coasters over time
 # name1 and name 2 - name of the roller coasters to compare
 # park1 and park 2 - name of the amusement parks where the roller coasters are located
@@ -54,5 +51,6 @@ def rank_years_comp(name1, name2, park1, park2, data):
     plt.show()
 
 
+rank_year("El Toro", "Six Flags Great Adventure", wood_ranking)
 plt.clf()
 rank_years_comp("El Toro", "Boulder Dash", "Six Flags Great Adventure", "Lake Compounce", wood_ranking)
