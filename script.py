@@ -71,8 +71,94 @@ def rank_top_10(n, data):
     plt.show()
 
 
+# function that plots histogram of column values from dataframe
+
+def hist_roller_coaster(data, column):
+    if column == 'height':
+        frame = data[data[column] <= 140]
+        frame1 = frame.dropna()
+    else:
+        frame1 = data.dropna()
+
+    data_new = frame1[column]
+    plt.hist(data_new, bins=20, density=True)
+    plt.xlabel(column)
+    plt.ylabel("Frequency")
+    plt.show()
+
+
+# function that plots bar chart for number of inversions for each roller coaster
+
+def bar_no_inversions(data, park):
+    park_coasters = data[(data['park'] == park) & (data['num_inversions'] > 0)]
+    park_coasters = park_coasters.sort_values('num_inversions', ascending=False)
+    coaster_names = park_coasters['name']
+    number_inversions = park_coasters['num_inversions']
+
+    plt.figure(figsize=(20, 15))
+    ax = plt.subplot()
+    plt.bar(range(len(coaster_names)), number_inversions)
+    ax.set_xticks(range(len(coaster_names)))
+    ax.set_xticklabels(coaster_names)
+    plt.xticks(rotation=45)
+    plt.title(f"Number of Roller Coasters inversions in {park} amusement park if there were any")
+    plt.xlabel("Roller Coaster")
+    plt.ylabel("Number of Inversions")
+    plt.show()
+
+
+# function that plots pie chart for operating status proportions
+
+def pie_chart_operating(data):
+    operating = data[data['status'] == 'status.operating']
+    closed = data[data['status'] == 'status.closed.definitely']
+    count = [len(operating), len(closed)]
+    labels = ['Operating', 'Closed']
+
+    plt.pie(count, autopct='%0.1f%%', labels=labels)
+    plt.title('Operating Status Proportions')
+    plt.axis('equal')
+    plt.show()
+
+
+# function that plots scatter plot for 2 numeric columns
+
+def scatter_plot(data, col1, col2):
+    if col1 == 'height':
+        data = data[data[col1] <= 140]
+        data_new = data.dropna()
+    elif col2 == 'height':
+        data = data[data[col1] <= 140]
+        data_new = data.dropna()
+    else:
+        data_new = data.dropna()
+
+    data_col1 = data_new[col1]
+    data_col2 = data_new[col2]
+
+    plt.scatter(data_col1, data_col2, marker='o')
+    plt.xlabel(col1)
+    plt.ylabel(col2)
+    plt.title(f"Scatter plot of {col2} against {col1}")
+    plt.show()
+
+
 rank_year("El Toro", "Six Flags Great Adventure", wood_ranking)
+
 plt.clf()
 rank_years_comp("El Toro", "Boulder Dash", "Six Flags Great Adventure", "Lake Compounce", wood_ranking)
+
 plt.clf()
 rank_top_10(5, wood_ranking)
+
+plt.clf()
+hist_roller_coaster(roller_coasters, 'height')
+
+plt.clf()
+bar_no_inversions(roller_coasters, 'Cedar Point')
+
+plt.clf()
+pie_chart_operating(roller_coasters)
+
+plt.clf()
+scatter_plot(roller_coasters, 'height', 'speed')
